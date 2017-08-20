@@ -8,12 +8,12 @@ import (
 )
 
 const (
-	updaterDeamonTimer = 10 * time.Second       //seconds             Частота обновления джекпотов/счетов
-	insertPackTimer    = 500 * time.Millisecond //        Частота обнволения операций
-	insertPackSize     = 50000                  // Память под пул операций в одном обновлении
-	numBets_start      = 500000                 // Число ставок для теста
-	numUsers_start     = 1000                   // Число юзеров которые будут делать ставки (поставить могут не все)
-	betDelay           = 30 * time.Microsecond  //microseconds
+	updateDeamonTimer = 10 * time.Second       //seconds             Частота обновления джекпотов/счетов
+	insertPackTimer   = 500 * time.Millisecond //        Частота обнволения операций
+	insertPackSize    = 50000                  // Память под пул операций в одном обновлении
+	numBets_start     = 500000                 // Число ставок для теста
+	numUsers_start    = 1000                   // Число юзеров которые будут делать ставки (поставить могут не все)
+	betDelay          = 30 * time.Microsecond  //microseconds
 )
 
 var (

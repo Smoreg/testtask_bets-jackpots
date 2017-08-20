@@ -5,7 +5,7 @@
 CREATE TABLE users(
   user_name CHAR(50) PRIMARY KEY ,
   deposit money
-);
+) with (FILLFACTOR = 90);
 
 CREATE unique INDEX user_index
 ON users (user_name);
@@ -26,7 +26,7 @@ CREATE TABLE operations (
   user_name CHAR(50),
   deposit money,
   jackpot_part money
-) with (FILLFACTOR = 90);
+);
 
 -- Вьюшка для быстрого получения актуального джектпота.
 create view real_jackpot as
