@@ -26,7 +26,7 @@ func updateDaemon() {
 
 	delete_operations := `DELETE FROM operations;`
 
-	ticker := time.NewTicker(time.Second * updaterDeamonTimer)
+	ticker := time.NewTicker(updaterDeamonTimer)
 	all_query := [3]string{update_users, update_jackpot, delete_operations}
 	log.Print("updateDaemon start!")
 	for {

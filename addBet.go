@@ -15,7 +15,7 @@ func betLoop() {
 	log.Print("betLoop starting")
 	bets_counter := 0
 	betsPool := make([]bet, 0, insertPackSize)
-	ticker := time.NewTicker(time.Millisecond * insertPackTimer)
+	ticker := time.NewTicker(insertPackTimer)
 	var wg sync.WaitGroup
 	for {
 		select {

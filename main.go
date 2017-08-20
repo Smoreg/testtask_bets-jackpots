@@ -1,3 +1,5 @@
+// main.go позволяет протестировать нагрузку на базу данных в условиях постоянных ставок
+// Перед запуском необходимо настроить доступ к базе в db.go и инициализировать объекты из tables.sql
 package main
 
 import (
@@ -6,12 +8,12 @@ import (
 )
 
 const (
-	updaterDeamonTimer = 10    //seconds
-	insertPackTimer    = 500   //milliseconds
-	insertPackSize     = 50000 //Inserts per commit
-	numBets_start      = 500000
-	numUsers_start     = 1000
-	betDelay           = 30
+	updaterDeamonTimer = 10 * time.Second       //seconds             Частота обновления джекпотов/счетов
+	insertPackTimer    = 500 * time.Millisecond //        Частота обнволения операций
+	insertPackSize     = 50000                  // Память под пул операций в одном обновлении
+	numBets_start      = 500000                 // Число ставок для теста
+	numUsers_start     = 1000                   // Число юзеров которые будут делать ставки (поставить могут не все)
+	betDelay           = 30 * time.Microsecond  //microseconds
 )
 
 var (
@@ -29,7 +31,7 @@ func main() {
 	defer func() { fmt.Println(time.Since(s_time)) }()
 	go func() {
 		for _, bet := range bets {
-			time.Sleep(time.Microsecond * betDelay)
+			time.Sleep(betDelay)
 			addBet(bet.name, bet.deposit, bet.jp_part)
 		}
 	}()
