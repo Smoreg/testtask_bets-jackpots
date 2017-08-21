@@ -7,9 +7,6 @@ CREATE TABLE users(
   deposit money
 ) with (FILLFACTOR = 90);
 
-CREATE unique INDEX user_index
-ON users (user_name);
-
 --Не актуальный джекпот полученный во время последнего обновления
 CREATE TABLE old_jackpot(
   value money
