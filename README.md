@@ -5,6 +5,7 @@
 ### Таблицы:
 
 * users
+
 | user_name  | deposit |
 | ------------- | ------------- |
 | pk char(50) | money |
@@ -14,6 +15,7 @@ with fillfactor == 90
 Таблица пользователей и их счетов. Раз в указанное время(updateDeamonTimer) обновляется данными из operations.
 
 * old_jackpot
+
 | value  |
 | ------------- |
 | money |
@@ -21,6 +23,7 @@ with fillfactor == 90
 Джекпот после последнего обновления. Сложив его с operaions.deposit можно получить актуальный джекпот
 
 * operations
+
 | id | user_name | deposit  | jackpot_part |
 | ------------- | ------------- | ------------ | ------------- |
 | pk SERIAL | char(50) | money | money |
