@@ -5,23 +5,33 @@ package main
 import (
 	"fmt"
 	"time"
+	"database/sql"
+	"log"
 )
 
 const (
-	updateDeamonTimer = 10 * time.Second       //seconds             Частота обновления джекпотов/счетов
-	insertPackTimer   = 500 * time.Millisecond //        Частота обнволения операций
-	insertPackSize    = 50000                  // Память под пул операций в одном обновлении
+	updateDaemonTimer = 3 * time.Second       //seconds             Частота обновления джекпотов/счетов
+	insertPackTimer   = 100 * time.Millisecond //        Частота обнволения операций
+	insertPackSize    = 2000                  // Память под пул операций в одном обновлении
 	numBets_start     = 500000                 // Число ставок для теста
 	numUsers_start    = 1000                   // Число юзеров которые будут делать ставки (поставить могут не все)
-	betDelay          = 30 * time.Microsecond  //microseconds
+	betDelay          = 10 * time.Microsecond  //microseconds
 )
 
 var (
+	db *sql.DB
+	err error
 	bets_ch   = make(chan bet)
 	finish_ch = make(chan int)
 )
 
 func main() {
+	db, err = make_db_conn()
+	if err != nil {
+		log.Panic(err)
+	}
+	defer db.Close()
+
 	bets, _ := NewBets(numBets_start, numUsers_start)
 
 	go updateDaemon()

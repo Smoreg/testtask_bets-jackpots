@@ -38,23 +38,3 @@ create view real_jackpot as
         ) t;
 
 
--------------------------------------------------
-
-INSERT INTO users(user_name, deposit)
-select user_name, sum(deposit) from operations group by user_name
-ON CONFLICT (user_name)
-DO
-    UPDATE
-        SET deposit = EXCLUDED.deposit + users.deposit;
-
-update jackpot set jackpot.value = jackpot.value + t.sum from ()
-
-
-UPDATE old_jackpot
-SET value = oj.value + t.nj
-FROM old_jackpot as oj
-CROSS JOIN
-    (
-        SELECT sum(jackpot_part) as nj
-        FROM operations
-    ) t

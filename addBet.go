@@ -31,14 +31,13 @@ func betLoop() {
 			wg.Add(1)
 			go func(pool []bet) {
 
-				tmp_db, err := make_db_conn()
 				if err != nil {
 					log.Panic(err)
 				}
-				defer tmp_db.Close()
+
 				defer wg.Done()
 
-				tx, err := tmp_db.Begin()
+				tx, err := db.Begin()
 				if err != nil {
 					log.Panic(err)
 				}

@@ -26,28 +26,22 @@ func updateDaemon() {
 
 	delete_operations := `DELETE FROM operations;`
 
-	ticker := time.NewTicker(updateDeamonTimer)
+	ticker := time.NewTicker(updateDaemonTimer)
 	all_query := [3]string{update_users, update_jackpot, delete_operations}
 	log.Print("updateDaemon start!")
 	for {
 		select {
 		case <-ticker.C:
-			db, err := make_db_conn()
 			if err != nil {
 				log.Panic(err)
 			}
-			rows, err := db.Query(`SELECT count(*) AS c FROM operations;`)
-			if err != nil {
-				log.Panic(err)
-			}
-
 			var co int
-			rows.Next()
-			rows.Scan(&co)
-			rows.Close()
+			err := db.QueryRow(`SELECT count(*) AS c FROM operations;`).Scan(&co)
+			if err != nil {
+				log.Panic(err)
+			}
 			if co == 0 {
 				log.Print("updateDaemon no operations")
-				db.Close()
 				continue
 			}
 
@@ -71,7 +65,6 @@ func updateDaemon() {
 			}
 			tx.Commit()
 			db.Exec(`VACUUM operations;`)
-			db.Close()
 			log.Print("updateDaemon tact clear ", co)
 		}
 	}
